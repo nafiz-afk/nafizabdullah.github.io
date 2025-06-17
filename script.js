@@ -7,26 +7,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinksContainer = document.querySelector(".nav-links");
     const socialLinksBtn = document.getElementById("socialLinksBtn");
     
-    // Set higher z-index for nav
-    nav.style.zIndex = "1001";
-    
-    // ==================== IMPROVED MOBILE NAVIGATION ====================
+    // ==================== MOBILE NAVIGATION ====================
     function toggleMobileMenu(open) {
         if (open) {
-            nav.classList.add("openNav");
-            document.body.style.overflow = "hidden";
-            navOpenBtn.setAttribute('aria-expanded', 'true');
+            navLinksContainer.classList.add("openNav");
+            document.body.classList.add("menu-open");
         } else {
-            nav.classList.remove("openNav");
-            document.body.style.overflow = "";
-            navOpenBtn.setAttribute('aria-expanded', 'false');
+            navLinksContainer.classList.remove("openNav");
+            document.body.classList.remove("menu-open");
         }
     }
     
     // Open mobile menu
     navOpenBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        toggleMobileMenu(!nav.classList.contains("openNav"));
+        toggleMobileMenu(true);
     });
     
     // Close mobile menu
@@ -36,32 +31,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Close menu when clicking outside on mobile
     document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768 && nav.classList.contains("openNav")) {
-            // Check if click is outside the navigation and not on the open button
-            if (!nav.contains(e.target) && e.target !== navOpenBtn) {
+        if (window.innerWidth <= 768 && navLinksContainer.classList.contains("openNav")) {
+            if (!e.target.closest('.nav-links') && !e.target.closest('.navOpenBtn')) {
                 toggleMobileMenu(false);
             }
-        }
-    });
-    
-    // Prevent clicks inside nav from bubbling up (to prevent immediate closing)
-    navLinksContainer.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768) {
-            e.stopPropagation();
         }
     });
     
     // Close menu when scrolling on mobile
-    let lastScrollTop = 0;
     window.addEventListener('scroll', function() {
-        if (window.innerWidth <= 768 && nav.classList.contains("openNav")) {
-            const st = window.pageYOffset || document.documentElement.scrollTop;
-            if (Math.abs(st - lastScrollTop) > 5) {
-                toggleMobileMenu(false);
-            }
-            lastScrollTop = st <= 0 ? 0 : st;
+        if (window.innerWidth <= 768 && navLinksContainer.classList.contains("openNav")) {
+            toggleMobileMenu(false);
         }
-        handleScroll(); // Call the existing scroll handler
     });
     
     // ==================== SMOOTH SCROLLING ====================
@@ -101,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    window.addEventListener('scroll', handleScroll);
+    
     // ==================== SOCIAL LINKS WINDOW ====================
     const socialWindow = document.getElementById("socialWindow");
     const socialOverlay = document.getElementById("socialOverlay");
@@ -136,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === "Escape") {
             if (socialWindow.classList.contains("active")) {
                 toggleSocialWindow(false);
-            } else if (nav.classList.contains("openNav")) {
+            } else if (navLinksContainer.classList.contains("openNav")) {
                 toggleMobileMenu(false);
             }
         }
