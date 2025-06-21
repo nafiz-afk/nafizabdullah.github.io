@@ -1282,10 +1282,6 @@ ul li::before {
 }
 
 
-    .search-box,
-    .search-icon {
-        display: none !important;
-    }
 
     
     /* Social Links Window on Mobile */
