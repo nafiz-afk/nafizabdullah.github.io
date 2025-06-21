@@ -230,7 +230,7 @@ body {
 
 .nav-links li {
     margin: 0 12px;
-    position: relative;
+    list-style: none;
 }
 
 .nav-links li a {
@@ -1221,68 +1221,71 @@ ul li::before {
 }
 /* Mobile Navigation Styles */
 @media (max-width: 768px) {
-    .nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 100%;
-        border-radius: 0;
-        padding: 10px 20px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        justify-content: space-between;
-        z-index: 1001;
-    }
+  .nav-links {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 70%;
+    background: linear-gradient(to bottom, #111, #222);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 60px 20px;
+    z-index: 999;
+  }
 
-    .nav-links {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        height: 100vh;
-        width: 80%;
-        max-width: 300px;
-        background: var(--nav-bg);
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 70px 20px 20px;
-        transition: left 0.4s ease;
-        z-index: 1002;
-    }
+  .nav-links.openNav {
+    transform: translateX(0%);
+  }
 
-    .nav.openNav .nav-links {
-        left: 0;
-    }
+  .navOpenBtn, .navCloseBtn {
+    display: block;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }
 
-    .nav-links li {
-        margin: 15px 0;
-        width: 100%;
-    }
+  .navCloseBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
 
-    .nav-links li a {
-        font-size: 18px;
-        width: 100%;
-        padding: 12px;
-    }
+  .nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #111;
+    z-index: 1000;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    .navOpenBtn,
-    .navCloseBtn {
-        display: block;
-        font-size: 24px;
-        cursor: pointer;
-        color: var(--nav-link-color);
-    }
+  .nav-links li {
+    width: 100%;
+  }
 
-    .navCloseBtn {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
+  .nav-links li a {
+    width: 100%;
+    display: block;
+    padding: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+}
+
 
     .search-box,
     .search-icon {
         display: none !important;
     }
-}
 
     
     /* Social Links Window on Mobile */
