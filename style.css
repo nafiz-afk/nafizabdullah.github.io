@@ -203,6 +203,7 @@ body {
 @media (max-width:720px) {
     .navbar {
         backdrop-filter:none;
+        margin: top 1px;;
     }
     
     .navbar-menu {
