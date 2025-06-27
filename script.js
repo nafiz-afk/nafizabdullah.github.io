@@ -1,201 +1,194 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // ==================== NAVIGATION ====================
-    const nav = document.querySelector(".nav");
-    const navOpenBtn = document.querySelector(".navOpenBtn");
-    const navCloseBtn = document.querySelector(".navCloseBtn");
-    const navLinks = document.querySelectorAll(".nav-links a");
-    const navLinksContainer = document.querySelector(".nav-links");
-    const socialLinksBtn = document.getElementById("socialLinksBtn");
+    // Configuration
+    const CONFIG = {
+        LOADER: {
+            DISPLAY_TIME: 1000,
+            FADE_OUT: 500       
+        },
+        MOBILE_BREAKPOINT: 720
+    };
+
+    // ==================== LOADING SCREEN ====================
+    const startTime = performance.now();
+    const loader = document.getElementById('loader');
     
-    // ==================== MOBILE NAVIGATION ====================
-    function toggleMobileMenu(open) {
+    setTimeout(function() {
+        if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', CONFIG.LOADER.FADE_OUT);
+        }
+    }, Math.max(0, CONFIG.LOADER.DISPLAY_TIME - (performance.now() - startTime)));
+
+    // ==================== NAVBAR TOGGLE ====================
+    const navbarToggle = document.querySelector('.navbar-toggle');
+    const navbarMenu = document.querySelector('.navbar-menu');
+
+    function toggleMenu(open) {
         if (open) {
-            navLinksContainer.classList.add("openNav");
-            document.body.classList.add("menu-open");
-            // Prevent scrolling when menu is open
-            document.body.style.overflow = "hidden";
+            navbarToggle.classList.add('active');
+            navbarMenu.classList.add('active');
+            document.body.classList.add('menu-open');
+            document.body.style.overflow = 'hidden';
         } else {
-            navLinksContainer.classList.remove("openNav");
-            document.body.classList.remove("menu-open");
-            // Restore scrolling when menu is closed
-            document.body.style.overflow = "";
+            navbarToggle.classList.remove('active');
+            navbarMenu.classList.remove('active');
+            document.body.classList.remove('menu-open');
+            document.body.style.overflow = '';
         }
     }
-    
-    // Open mobile menu
-    navOpenBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        toggleMobileMenu(true);
+
+    navbarToggle?.addEventListener('click', () => {
+        toggleMenu(!navbarMenu.classList.contains('active'));
     });
-    
-    // Close mobile menu
-    navCloseBtn.addEventListener("click", () => {
-        toggleMobileMenu(false);
-    });
-    
-    // Close menu when clicking outside on mobile
+
     document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768 && navLinksContainer.classList.contains("openNav")) {
-            if (!e.target.closest('.nav-links') && !e.target.closest('.navOpenBtn')) {
-                toggleMobileMenu(false);
-            }
+        if (
+            window.innerWidth <= CONFIG.MOBILE_BREAKPOINT &&
+            navbarMenu.classList.contains('active') &&
+            !e.target.closest('.navbar-menu') &&
+            !e.target.closest('.navbar-toggle')
+        ) {
+            toggleMenu(false);
+        }
+    });
+
+    window.addEventListener('scroll', () => {
+        if (window.innerWidth <= CONFIG.MOBILE_BREAKPOINT && navbarMenu.classList.contains('active')) {
+            toggleMenu(false);
         }
     });
     
-    // Close menu when scrolling on mobile
-    window.addEventListener('scroll', function() {
-        if (window.innerWidth <= 768 && navLinksContainer.classList.contains("openNav")) {
-            toggleMobileMenu(false);
-        }
+
+    // ==================== DARK MODE TOGGLE ====================
+    const mechanicalToggle = document.getElementById("mechanicalToggle");
+
+    mechanicalToggle?.addEventListener("click", function() {
+        document.body.classList.toggle("dark-mode");
+        this.classList.toggle("active");
+        localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
     });
-    
+
+    if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+        mechanicalToggle?.classList.add("active");
+    }
+
     // ==================== SMOOTH SCROLLING ====================
+    const navLinks = document.querySelectorAll(".navbar-menu a");
+
     navLinks.forEach(link => {
         link.addEventListener("click", (e) => {
             const href = link.getAttribute('href');
-            
             if (href.startsWith('#')) {
                 e.preventDefault();
-                
-                // Close mobile menu if open
-                if (window.innerWidth <= 768) {
-                    toggleMobileMenu(false);
+                if (window.innerWidth <= CONFIG.MOBILE_BREAKPOINT) {
+                    toggleMenu(false);
                 }
-                
-                // Scroll to target
+
                 const target = document.querySelector(href);
                 if (target) {
-                    // Calculate the position considering the fixed nav height
-                    const navHeight = nav.offsetHeight;
-                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 }
             }
-            
-            // Update active link
-            navLinks.forEach(item => item.classList.remove("active"));
-            link.classList.add("active");
         });
     });
-    
-    // ==================== STICKY NAVBAR ON SCROLL ====================
-    function handleScroll() {
-        // Always keep nav fixed at the top
-        nav.classList.add('fixed-nav');
-        
-        // Add scrolled class for styling changes on scroll
-        if (window.scrollY > 100) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
+
+    // ==================== ABOUT ME & CV BUTTONS ====================
+    const aboutMeBtn = document.getElementById("aboutMeBtn");
+    const cvBtn = document.getElementById("cvBtn");
+    const aboutSection = document.getElementById("about");
+
+    // Toggle About Me section
+    if (aboutMeBtn && aboutSection) {
+        aboutMeBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            
+            // Toggle hidden class
+            aboutSection.classList.toggle("hidden-section");
+            
+            // Scroll to section if it's being shown
+            if (!aboutSection.classList.contains("hidden-section")) {
+                const targetPosition = aboutSection.getBoundingClientRect().top + window.pageYOffset;
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+            }
+        });
     }
-    
-    window.addEventListener('scroll', handleScroll);
-    
+
+    // CV Button functionality
+    if (cvBtn) {
+        cvBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            // Replace with your actual CV file path
+            const cvUrl = "path/to/your/cv.pdf";
+            
+            // Create a temporary link to download the CV
+            const link = document.createElement("a");
+            link.href = cvUrl;
+            link.download = "Nafiz_Abdullah_CV.pdf";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Alternatively, you can open it in a new tab:
+            // window.open(cvUrl, '_blank');
+        });
+    }
+
     // ==================== SOCIAL LINKS WINDOW ====================
+    const socialLinksBtn = document.getElementById("socialLinksBtn");
     const socialWindow = document.getElementById("socialWindow");
     const socialOverlay = document.getElementById("socialOverlay");
     const socialCloseBtn = document.getElementById("socialCloseBtn");
-    
-    function toggleSocialWindow(open) {
-        if (open) {
-            socialWindow.classList.add("active");
-            socialOverlay.classList.add("active");
+
+    function toggleSocialWindow(show) {
+        if (show) {
+            socialWindow.style.display = "block";
+            socialOverlay.style.display = "block";
             document.body.style.overflow = "hidden";
-            
             // Close mobile menu if open
-            if (window.innerWidth <= 768) {
-                toggleMobileMenu(false);
+            if (navbarMenu && navbarMenu.classList.contains("active")) {
+                toggleMenu(false);
             }
         } else {
-            socialWindow.classList.remove("active");
-            socialOverlay.classList.remove("active");
+            socialWindow.style.display = "none";
+            socialOverlay.style.display = "none";
             document.body.style.overflow = "";
         }
     }
-    
-    socialLinksBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        toggleSocialWindow(true);
-    });
-    
-    socialCloseBtn.addEventListener("click", () => toggleSocialWindow(false));
-    socialOverlay.addEventListener("click", () => toggleSocialWindow(false));
-    
-    // Close with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === "Escape") {
-            if (socialWindow.classList.contains("active")) {
-                toggleSocialWindow(false);
-            } else if (navLinksContainer.classList.contains("openNav")) {
-                toggleMobileMenu(false);
-            }
-        }
-    });
-    
-    // ==================== DARK MODE TOGGLE ====================
-    const mechanicalToggle = document.getElementById("mechanicalToggle");
-    
-    mechanicalToggle.addEventListener("click", function() {
-        document.body.classList.toggle("dark-mode");
-        this.classList.toggle("active");
-        
-        // Save preference to localStorage
-        localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
-    });
-    
-    // Check for saved dark mode preference
-    if (localStorage.getItem("darkMode") === "true") {
-        document.body.classList.add("dark-mode");
-        mechanicalToggle.classList.add("active");
-    }
-    
-    // ==================== ABOUT ME SECTION ====================
-    const aboutMeBtn = document.getElementById("aboutMeBtn");
-    const aboutMeSection = document.getElementById("aboutMeSection");
-    
-    aboutMeBtn.addEventListener("click", function() {
-        aboutMeSection.style.display = aboutMeSection.style.display === "none" ? "block" : "none";
-        
-        if (aboutMeSection.style.display === "block") {
-            // Calculate position considering fixed nav
-            const navHeight = nav.offsetHeight;
-            const targetPosition = aboutMeSection.getBoundingClientRect().top + window.pageYOffset - navHeight;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: "smooth"
-            });
-            animateSkillBars();
-        }
-    });
-    
-    // ==================== SKILL BARS ANIMATION ====================
-    const skillProgressBars = document.querySelectorAll(".skill-progress");
-    
-    function animateSkillBars() {
-        skillProgressBars.forEach(bar => {
-            const width = bar.getAttribute("data-width");
-            bar.style.width = width + "%";
+
+    if (socialLinksBtn) {
+        socialLinksBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            toggleSocialWindow(true);
         });
     }
-    
-    // ==================== CV BUTTON ====================
-    const cvBtn = document.getElementById("cvBtn");
-    
-    cvBtn.addEventListener("click", function() {
-        window.open('cv.html', '_blank', 'width=1000,height=800,scrollbars=yes')?.focus();
+
+    if (socialCloseBtn) {
+        socialCloseBtn.addEventListener("click", function() {
+            toggleSocialWindow(false);
+        });
+    }
+
+    if (socialOverlay) {
+        socialOverlay.addEventListener("click", function() {
+            toggleSocialWindow(false);
+        });
+    }
+
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape" && socialWindow && socialWindow.style.display === "block") {
+            toggleSocialWindow(false);
+        }
     });
-    
+
+    // Initialize state
+    if (socialWindow) socialWindow.style.display = "none";
+    if (socialOverlay) socialOverlay.style.display = "none";
+
     // ==================== INITIALIZE ANIMATIONS ====================
     function initAnimations() {
         const animatedElements = document.querySelectorAll('.section, .header');
-        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -204,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }, { threshold: 0.1 });
-        
+
         animatedElements.forEach(el => {
             el.style.opacity = 0;
             el.style.transform = 'translateY(20px)';
@@ -212,33 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
             observer.observe(el);
         });
     }
-    
+
     initAnimations();
-    
-    // ==================== WINDOW RESIZE HANDLER ====================
-    function handleResize() {
-        if (window.innerWidth > 768) {
-            // Reset mobile-specific states when resizing to desktop
-            toggleMobileMenu(false);
-        }
-    }
-    
-    window.addEventListener('resize', handleResize);
-    
-    // ==================== LOADING SCREEN ====================
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            const loader = document.getElementById('loader');
-            if (loader) {
-                loader.style.opacity = '0';
-                setTimeout(function() {
-                    loader.style.display = 'none';
-                }, 200);
-            }
-        }, 1000);
-    });
-    
-    // Initialize
-    handleResize();
-    handleScroll();
 });
