@@ -210,13 +210,14 @@ body {
         align-items: flex-start;
         gap: 1.7rem;
         position: absolute;
-        height: 100vh;
+        height: 60vh;
         width: 250px;
         top: 0;
         right: 0;
         padding: 5rem 1.5rem;
-        box-shadow: 0 10px 10px rgba(0,0,0,0.5);
-        backdrop-filter:blur(10px);
+        box-shadow: 0 10px 10px rgba(0,0,0,0.9);
+        border-radius: 20px;
+        backdrop-filter:blur(50px);
     }
     
     .navbar-toggle {
@@ -680,9 +681,14 @@ ul li::before {
 }
 
 /* Footer */
+@media(max-width:520px){
+    .social-links{
+        display: none;
+    }
+}
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 2px;
     margin-top: 40px;
     color: var(--p-color);
     font-size: 0.9rem;
@@ -832,7 +838,7 @@ footer strong {
 .mechanical-toggle {
     position: fixed;
     top: 100px;
-    right: 20px;
+    right: 40px;
     z-index: 100;
     width: 60px;
     height: 30px;
@@ -1199,7 +1205,7 @@ footer strong {
 /* Responsive Adjustments */
 @media (max-width: 576px) {
     body {
-        padding-top: 80px;
+        padding-top: 8px;
     }
     
     .header h1 {
