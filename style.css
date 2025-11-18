@@ -189,7 +189,7 @@ body {
 
 .nav-link:hover, .nav-link.active {
     color: white;
-    background: rgba(188,212,229,0.8);
+    background: rgba(4, 26, 43, 0.8);
 }
 
 .nav-actions {
@@ -265,7 +265,7 @@ body {
 
 .mobile-nav-link:hover, .mobile-nav-link.active {
     color: white;
-    background: rgba(188,212,229,0.8);
+    background: rgba(21, 26, 29, 0.8);
     transform: translateY(-2px);
 }
 
@@ -370,8 +370,6 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.2);
     z-index: 1;
 }
-
-/* Perfectly positioned floating elements */
 .element-1 {
     top: 15%;
     left: 8%;
@@ -1150,7 +1148,6 @@ footer {
         text-align: center;
     }
     
-    /* Mobile floating elements - reposition and resize */
     .floating-elements {
         display: flex;
         justify-content: center;
