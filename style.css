@@ -13,9 +13,9 @@
     --text-color: #2c3e50;
     --section-bg: rgba(255, 255, 255, 0.7);
     --p-color: #555;
-    --nav-bg: rgba(255, 255, 255, 0.8);
+    --nav-bg:#517468;
     --nav-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    --nav-link-color: #2a633d;
+    --nav-link-color: #ffffff;
     --nav-link-hover: #85cc33;
     --social-bg: rgba(255, 255, 255, 0.9);
     --social-shadow: rgba(0, 0, 0, 0.2);
@@ -188,8 +188,8 @@ body {
 }
 
 .nav-link:hover, .nav-link.active {
-    color: white;
-    background: rgba(4, 26, 43, 0.8);
+    color: rgb(236, 209, 209);
+    background: rgba(6, 72, 83, 0.8);
 }
 
 .nav-actions {
@@ -225,7 +225,7 @@ body {
     transform: translateX(-50%);
     width: 90%;
     max-width: 400px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(126, 156, 184, 0.555);
     backdrop-filter: blur(20px);
     border-radius: var(--border-radius);
     box-shadow: var(--nav-shadow);
@@ -252,7 +252,7 @@ body {
     border-radius: 12px;
     transition: var(--transition);
     font-size: 0.7rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(82, 70, 70, 0.342);
     flex: 1;
     margin: 0 2px;
     min-width: 0;
