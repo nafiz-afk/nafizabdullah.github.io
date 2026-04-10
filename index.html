@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nafiz Abdullah | Web Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Cabinet+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader-inner">
+            <div class="loader-ring"></div>
+            <div class="loader-text">nafiz<span>.</span></div>
+        </div>
+    </div>
+
+    <!-- Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Noise overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <span class="logo-bracket">[</span>nafiz<span class="logo-dot">.</span><span class="logo-bracket">]</span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active" data-text="home">home</a></li>
+                <li><a href="#about" class="nav-link" data-text="about">about</a></li>
+                <li><a href="#portfolio" class="nav-link" data-text="work">work</a></li>
+                <li><a href="#journey" class="nav-link" data-text="journey">journey</a></li>
+                <li><a href="#contact" class="nav-link" data-text="contact">contact</a></li>
+            </ul>
+
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile drawer -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <ul class="drawer-menu">
+            <li><a href="#home" class="drawer-link">01 — home</a></li>
+            <li><a href="#about" class="drawer-link">02 — about</a></li>
+            <li><a href="#portfolio" class="drawer-link">03 — work</a></li>
+            <li><a href="#journey" class="drawer-link">04 — journey</a></li>
+            <li><a href="#contact" class="drawer-link">05 — contact</a></li>
+        </ul>
+        <div class="drawer-footer">
+            <a href="https://github.com/nafiz-afk" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61565407327381" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/_nafiz_abdullah/" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+
+    <!-- ===== MUSIC PLAYER ===== -->
+    <div class="music-pill" id="musicPill">
+        <div class="pill-art">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=80&q=80" alt="album" id="pillArt">
+            <div class="pill-vinyl" id="pillVinyl"></div>
+        </div>
+        <div class="pill-info">
+            <span class="pill-song" id="pillSong">Golden Brown</span>
+            <span class="pill-artist" id="pillArtist">The Stranglers</span>
+        </div>
+        <div class="pill-controls">
+            <button id="pillPrev"><i class="fas fa-backward-step"></i></button>
+            <button id="pillPlay" class="pill-play-btn"><i class="fas fa-play"></i></button>
+            <button id="pillNext"><i class="fas fa-forward-step"></i></button>
+        </div>
+        <button class="pill-expand" id="pillExpand"><i class="fas fa-chevron-up"></i></button>
+    </div>
+
+    <!-- Expanded music player -->
+    <div class="music-panel" id="musicPanel">
+        <div class="panel-header">
+            <span class="panel-label">// now playing</span>
+            <button id="panelClose"><i class="fas fa-xmark"></i></button>
+        </div>
+        <div class="panel-art-wrap">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80" alt="art" id="panelArt">
+        </div>
+        <div class="panel-song-info">
+            <h3 id="panelTitle">Golden Brown Instrumental</h3>
+            <p id="panelArtist">The Stranglers</p>
+        </div>
+        <div class="panel-progress" id="panelProgressBar">
+            <div class="panel-fill" id="panelFill"></div>
+        </div>
+        <div class="panel-times">
+            <span id="panelCurrent">0:00</span>
+            <span id="panelTotal">0:00</span>
+        </div>
+        <div class="panel-controls">
+            <button id="panelPrev"><i class="fas fa-backward-step"></i></button>
+            <button id="panelPlay" class="panel-play"><i class="fas fa-play"></i></button>
+            <button id="panelNext"><i class="fas fa-forward-step"></i></button>
+        </div>
+        <div class="panel-volume">
+            <i class="fas fa-volume-low"></i>
+            <input type="range" id="volSlider" min="0" max="100" value="40">
+            <i class="fas fa-volume-high"></i>
+        </div>
+        <ul class="panel-playlist" id="panelPlaylist">
+            <li class="plist-item active" data-index="0">
+                <div><span class="plist-title">Golden Brown Instrumental</span><span class="plist-artist">The Stranglers</span></div>
+                <span class="plist-dur">1:21</span>
+            </li>
+            <li class="plist-item" data-index="1">
+                <div><span class="plist-title">Fade to Black</span><span class="plist-artist">Metallica</span></div>
+                <span class="plist-dur">4:20</span>
+            </li>
+            <li class="plist-item" data-index="2">
+                <div><span class="plist-title">Far From Any Road</span><span class="plist-artist">The Handsome Family</span></div>
+                <span class="plist-dur">3:55</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Music toggle floating button -->
+    <button class="music-fab" id="musicFab" aria-label="Open music player">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <!-- Social overlay -->
+    <div class="social-overlay" id="socialOverlay"></div>
+    <div class="social-modal" id="socialModal">
+        <button class="modal-close" id="socialClose"><i class="fas fa-xmark"></i></button>
+        <h2>connect<span>.</span></h2>
+        <ul class="modal-links">
+            <li><a href="https://www.facebook.com/profile.php?id=61565407327381" target="_blank"><i class="fab fa-facebook"></i>Facebook</a></li>
+            <li><a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i>Twitter</a></li>
+            <li><a href="https://github.com/nafiz-afk" target="_blank"><i class="fab fa-github"></i>GitHub</a></li>
+            <li><a href="https://www.instagram.com/_nafiz_abdullah/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a></li>
+            <li><a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
+        </ul>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="hero-bg-grid"></div>
+            <div class="hero-glow glow-1"></div>
+            <div class="hero-glow glow-2"></div>
+
+            <div class="hero-inner">
+                <div class="hero-left">
+                    <div class="hero-badge">
+                        <span class="badge-dot"></span>
+                        <span>available for work</span>
+                    </div>
+                    <h1 class="hero-name">
+                        <span class="name-line" data-text="MD. Nafiz">MD. Nafiz</span>
+                        <span class="name-line accent" data-text="Abdullah">Abdullah</span>
+                    </h1>
+                    <p class="hero-role">
+                        <span class="role-prefix">// </span>
+                        <span class="role-typed" id="typedRole"></span>
+                        <span class="type-cursor">|</span>
+                    </p>
+                    <p class="hero-desc">Transforming creative ideas into fully functional, elegant web applications that provide real value to users. Class 8 student who codes like a senior dev.</p>
+
+                    <div class="hero-actions">
+                        <button class="btn-glow" id="aboutMeBtn">
+                            <i class="fas fa-user"></i> About Me
+                        </button>
+                        <button class="btn-outline" id="cvBtn">
+                            <i class="fas fa-file-alt"></i> My CV
+                        </button>
+                        <button class="btn-ghost" id="socialLinksBtn">
+                            <i class="fas fa-share-alt"></i> Links
+                        </button>
+                    </div>
+
+                    <div class="hero-stack">
+                        <span class="stack-label">stack:</span>
+                        <span class="stack-tag">HTML</span>
+                        <span class="stack-tag">CSS</span>
+                        <span class="stack-tag">JS</span>
+                        <span class="stack-tag">PHP</span>
+                        <span class="stack-tag">Laravel</span>
+                    </div>
+                </div>
+
+                <div class="hero-right">
+                    <div class="hero-img-wrap">
+                        <div class="img-orbit">
+                            <div class="orbit-icon orbit-1"><i class="fab fa-html5"></i></div>
+                            <div class="orbit-icon orbit-2"><i class="fab fa-css3-alt"></i></div>
+                            <div class="orbit-icon orbit-3"><i class="fab fa-js"></i></div>
+                            <div class="orbit-icon orbit-4"><i class="fab fa-php"></i></div>
+                            <div class="orbit-icon orbit-5"><i class="fab fa-laravel"></i></div>
+                        </div>
+                        <div class="img-frame">
+                            <img src="pic.png" alt="Nafiz Abdullah" class="hero-photo" onerror="this.src='https://ui-avatars.com/api/?name=Nafiz+Abdullah&size=400&background=7c3aed&color=fff&bold=true'">
+                        </div>
+                        <div class="img-deco deco-tl">{ }</div>
+                        <div class="img-deco deco-br">01</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-hint">
+                <span>scroll</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="section about-section" id="about">
+            <div class="section-tag">02 / about</div>
+            <div class="section-header">
+                <h2 class="section-title">About <span class="accent-text">Me</span></h2>
+                <p class="section-sub">Get to know more about my skills and experience</p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text-col">
+                    <p>I'm a passionate and detail-oriented <strong>Web Developer</strong> currently training in Full Stack Web Development with PHP Laravel at <strong>CodeJogot</strong>. I love transforming creative ideas into fully functional, elegant web applications.</p>
+                    <p>My stack includes frontend technologies like <strong>HTML5, CSS3, Bootstrap, JavaScript</strong>, as well as powerful backend tools like <strong>PHP, MySQL,</strong> and the <strong>Laravel</strong> framework.</p>
+                    <p><strong>🚀 Hosting Experience:</strong> Successfully deployed projects on <strong>InfinityFree, 000webhost,</strong> and <strong>GitHub Pages</strong>. Comfortable managing cPanel and DNS — localhost to live in minutes.</p>
+                </div>
+
+                <div class="about-cards-grid">
+                    <div class="acard" data-delay="0">
+                        <div class="acard-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h4>Training</h4>
+                        <p>Full Stack Web Dev<br><strong>CodeJogot</strong></p>
+                    </div>
+                    <div class="acard" data-delay="100">
+                        <div class="acard-icon"><i class="fas fa-tools"></i></div>
+                        <h4>Tools</h4>
+                        <ul><li>VS Code</li><li>XAMPP / Valet</li><li>Git & GitHub</li><li>cPanel</li></ul>
+                    </div>
+                    <div class="acard" data-delay="200">
+                        <div class="acard-icon"><i class="fas fa-comments"></i></div>
+                        <h4>Soft Skills</h4>
+                        <ul><li>Communication</li><li>Teamwork</li><li>Problem Solving</li><li>Time Mgmt</li></ul>
+                    </div>
+                    <div class="acard" data-delay="300">
+                        <div class="acard-icon"><i class="fas fa-bullseye"></i></div>
+                        <h4>Goals</h4>
+                        <ul><li>Master Laravel & APIs</li><li>Deploy real projects</li><li>Build a SaaS</li><li>Global clients</li></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="skills-wrap">
+                <h3 class="skills-heading">// technical skills</h3>
+                <div class="skills-grid">
+                    <div class="skill-item" data-delay="0">
+                        <div class="skill-info"><span>HTML / CSS</span><span class="skill-pct">90%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="90"></div></div>
+                    </div>
+                    <div class="skill-item" data-delay="100">
+                        <div class="skill-info"><span>JavaScript</span><span class="skill-pct">75%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="75"></div></div>
+                    </div>
+                    <div class="skill-item" data-delay="200">
+                        <div class="skill-info"><span>PHP / Laravel</span><span class="skill-pct">80%</span></div>
+                        <div class="skill-track"><div class="skill-fill" data-width="80"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO -->
+        <section class="section portfolio-section" id="portfolio">
+            <div class="section-tag">03 / work</div>
+            <div class="section-header">
+                <h2 class="section-title">My <span class="accent-text">Projects</span></h2>
+                <p class="section-sub">Recent builds that showcase my skills</p>
+            </div>
+
+            <div class="portfolio-grid">
+                <div class="pcard" data-delay="0">
+                    <div class="pcard-img">
+                        <img src="calculator.png" alt="Age Calculator" onerror="this.parentElement.classList.add('img-fallback')">
+                        <div class="pcard-overlay">
+                            <div class="pcard-links">
+                                <a href="https://codepen.io/imtasir-1101/pen/VYvyQBx" target="_blank" class="pcard-link"><i class="fas fa-code"></i></a>
+                                <a href="https://nafiz-afk.github.io/Age-Calculator.github.io/" target="_blank" class="pcard-link"><i class="fas fa-arrow-up-right-from-square"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pcard-body">
+                        <h3>Age Calculator</h3>
+                        <p>A responsive web app for calculating any age precisely</p>
+                        <div class="pcard-tags">
+                            <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pcard" data-delay="100">
+                    <div class="pcard-img">
+                        <img src="data-management.png" alt="Text Analyzor" onerror="this.parentElement.classList.add('img-fallback')">
+                        <div class="pcard-overlay">
+                            <div class="pcard-links">
+                                <a href="https://codepen.io/imtasir-1101/pen/NPGXyBQ" target="_blank" class="pcard-link"><i class="fas fa-code"></i></a>
+                                <a href="https://nafiz-afk.github.io/text-analyzor/" target="_blank" class="pcard-link"><i class="fas fa-arrow-up-right-from-square"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pcard-body">
+                        <h3>Text-Analyzor</h3>
+                        <p>Analyze any text — large or small — with smart metrics</p>
+                        <div class="pcard-tags">
+                            <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pcard" data-delay="200">
+                    <div class="pcard-img">
+                        <img src="vondo porishodh.png" alt="Vondo Porishodh" onerror="this.parentElement.classList.add('img-fallback')">
+                        <div class="pcard-overlay">
+                            <div class="pcard-links">
+                                <a href="https://codepen.io/Nafiz-Abdullah/pen/ZYWrQBJ" target="_blank" class="pcard-link"><i class="fas fa-code"></i></a>
+                                <a href="https://nafiz-afk.github.io/vondo-porishodh/" target="_blank" class="pcard-link"><i class="fas fa-arrow-up-right-from-square"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pcard-body">
+                        <h3>Vondo Porishodh</h3>
+                        <p>A hilarious documentary friend circle site — my favorite project lol</p>
+                        <div class="pcard-tags">
+                            <span>Laravel</span><span>MySQL</span><span>Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOURNEY -->
+        <section class="section journey-section" id="journey">
+            <div class="section-tag">04 / journey</div>
+            <div class="section-header">
+                <h2 class="section-title">Learning <span class="accent-text">Journey</span></h2>
+                <p class="section-sub">Through CodeJogot's curriculum, building skills for a real dev career</p>
+            </div>
+
+            <div class="journey-grid">
+                <div class="jcard" data-delay="0">
+                    <div class="jcard-num">01</div>
+                    <div class="jcard-icon"><i class="fas fa-code"></i></div>
+                    <h3>Frontend</h3>
+                    <p>HTML, CSS, JavaScript, Tailwind & React</p>
+                </div>
+                <div class="jcard" data-delay="100">
+                    <div class="jcard-num">02</div>
+                    <div class="jcard-icon"><i class="fas fa-server"></i></div>
+                    <h3>Backend</h3>
+                    <p>PHP, Laravel Framework & MySQL</p>
+                </div>
+                <div class="jcard" data-delay="200">
+                    <div class="jcard-num">03</div>
+                    <div class="jcard-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Responsive</h3>
+                    <p>Mobile-first Design for all devices</p>
+                </div>
+                <div class="jcard" data-delay="300">
+                    <div class="jcard-num">04</div>
+                    <div class="jcard-icon"><i class="fas fa-rocket"></i></div>
+                    <h3>Deployment</h3>
+                    <p>Real-world projects shipped live</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="section contact-section" id="contact">
+            <div class="section-tag">05 / contact</div>
+            <div class="section-header">
+                <h2 class="section-title">Hit Me <span class="accent-text">Up</span></h2>
+                <p class="section-sub">Open for collabs, freelance, or just to say hey 👋</p>
+            </div>
+
+            <div class="contact-wrap">
+                <div class="contact-info-col">
+                    <div class="cinfo-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>imtasirabd@gmail.com</span>
+                    </div>
+                    <div class="cinfo-item">
+                        <i class="fas fa-phone"></i>
+                        <span>01793962566</span>
+                    </div>
+                    <div class="cinfo-item">
+                        <i class="fas fa-location-dot"></i>
+                        <span>Cumilla, Bangladesh</span>
+                    </div>
+                    <div class="cinfo-socials">
+                        <a href="https://github.com/nafiz-afk" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61565407327381" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/_nafiz_abdullah/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <form class="contact-form" action="https://formsubmit.co/imtasirabd@gmail.com" method="POST">
+                    <div class="form-group">
+                        <label>your name</label>
+                        <input type="text" name="name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>your email</label>
+                        <input type="email" name="email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>your message</label>
+                        <textarea name="message" placeholder="Hey Nafiz, I'd love to work with you..." required></textarea>
+                    </div>
+                    <input type="hidden" name="_captcha" value="false">
+                    <button type="submit" class="btn-glow full-width">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="logo-bracket">[</span>nafiz<span class="logo-dot">.</span><span class="logo-bracket">]</span>
+            </div>
+            <p class="footer-copy">© 2025 MD. Nafiz Abdullah — Built with 💜 & too much caffeine</p>
+            <div class="footer-links">
+                <a href="https://github.com/nafiz-afk" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61565407327381" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/_nafiz_abdullah/" target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile bottom nav -->
+    <nav class="mobile-bottom-nav">
+        <a href="#home" class="mbn-link active"><i class="fas fa-house"></i><span>Home</span></a>
+        <a href="#about" class="mbn-link"><i class="fas fa-user"></i><span>About</span></a>
+        <a href="#portfolio" class="mbn-link"><i class="fas fa-briefcase"></i><span>Work</span></a>
+        <a href="#journey" class="mbn-link"><i class="fas fa-rocket"></i><span>Journey</span></a>
+        <a href="#contact" class="mbn-link"><i class="fas fa-envelope"></i><span>Contact</span></a>
+    </nav>
+
+</body>
+</html>
